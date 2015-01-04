@@ -1,6 +1,7 @@
 <?php
 	use \pwaf\libs\controller;
 	use \pwaf\libs\util;
+	use \pwaf\libs\json;
 
 	/**
  * Created by PhpStorm.
@@ -11,6 +12,7 @@
 
 	class postscontroller extends controller
 	{
+
 		public function __construct()
 		{
 			parent::__construct();
@@ -18,8 +20,13 @@
 
 		public function index()
 		{
-			//$result = util::escape("<html>escaped</html>");
-			$this->json->set(500);
+			json::set(500);
+		}
+
+		public function show()
+		{
+			$id = $this->params['id'];
+			json::set($id);
 		}
 
 		public function create()

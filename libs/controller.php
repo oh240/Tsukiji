@@ -22,6 +22,7 @@
 		public $controllerName;
 		public $actionName;
 		public $httpCode;
+		public $params;
 		protected $json;
 		protected $debugLevel;
 
@@ -30,7 +31,6 @@
 		 */
 		public function __construct()
 		{
-			$this->json = new json();
 			//HTTPCODEのデフォルトに200をセット
 			$this->httpCode = 200;
 		}

@@ -22,5 +22,15 @@
 					'action' => "update"
 				],
 			],
+			"/posts/@id/@id2" => [
+				"GET" => [
+					"controller" => "posts",
+					'action' => "show"
+				],
+				"POST" => [
+					"controller" => "posts",
+					'action' => "update"
+				],
+			],
 		];
 	}

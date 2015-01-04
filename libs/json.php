@@ -17,7 +17,7 @@ class json
 	 * @param int $httpCode
 	 * @param array $params
 	 */
-	public function set($httpCode = 200,$params = [])
+	public static function set($httpCode = 200,$params = [])
 	{
 		$params = [
 			'code' => $httpCode,

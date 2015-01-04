@@ -52,8 +52,6 @@
 			}
 
 			//TEST的にHTTPMethodを変更
-			$httpMethod = "POST";
-
 			foreach ($compiledRoutes as $pattern => $params){
 				if (preg_match('#^'.$pattern."$#",$requestURI,$matches)){
 					if (isset($params[$httpMethod])){
@@ -67,6 +65,8 @@
 					}
 				}
 			}
+			//例外を投げるようにする
+			return false;
 		}
 
 	}

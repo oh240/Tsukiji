@@ -2,7 +2,6 @@
 	namespace pwaf\libs;
 
 	use pwaf\config\route;
-
 	define("DEFAULT_CONTROLLER",'users');
 	define("DEFAULT_ACTION", 'index');
 
@@ -11,6 +10,7 @@
 		private $actionName;
 		private $httpMethod;
 		private $query;
+		private $params;
 
 		public function dispatch() {
 
@@ -20,74 +20,63 @@
 			$parse_url = parse_url($requestURI);
 			$requestURI = $parse_url['path'];
 
+			//GETパラメーターのセット
 			if (!empty($_GET)){
 				//paramsに各種Getパラメーターをセットする
 				$this->query = $parse_url['query'];
 			}
 
+			$this->httpMethod = $_SERVER['REQUEST_METHOD'];
+
 			//requestURIからController名Action名を取得する
 			$params = router::loadRouteConfig($requestURI);
 
-			var_dump($params);
-
-//			$this->controllerName = strtolower($params[0]);
-//
-//			if (isset($params[1])){
-//				$this->actionName = $params[1];
-//			} else {
-//				$this->actionName = DEFAULT_ACTION;
-//			}
-
-			$this->httpMethod = $_SERVER['REQUEST_METHOD'];
+			$this->controllerName = $params['controller'];
+			$this->actionName = $params['action'];
+			array_shift($params['params']);
+			$this->params = $params['params'];
 
 			$controllerFilePath = "controllers/";
 			$controllerFileName = $controllerFilePath . $this->controllerName .'controller.php';
 
-//			try {
-//				//ファイルの存在確認
-//				if (file_exists($controllerFileName)){
-//					//ControllerFileを読み込む
-//					require_once($controllerFileName);
-//				} else {
-//					//コントローラーが無いときの例外を投げる
-//					throw new Exception("Not Found {$this->controllerName}controller.php");
-//				}
-//
-//				$controllerClassName = $this->controllerName.'controller';
-//				//インスタンスの生成
-//				$controllerInstance = new $controllerClassName();
-//				$controllerInstance->controllerName = $this->controllerName;
-//				$controllerInstance->actionName = $this->actionName;
-//				$controllerInstance->httpMethod = $this->httpMethod;
-//				$controllerInstance->query = $this->query;
-//
-//				if ($this->httpMethod !== 'GET'){
-//					//GET
-//				} else {
-//					//POST,PUT, DELETE,
-//					if(isset($_POST)){
-//						$controllerInstance->receiveData = $_POST;
-//					}
-//				}
-//
-//				if (method_exists($controllerInstance,$this->actionName)){
-//					//paramsが存在するとき...
-//					if (true){
-//						//実行
-//						//echo
-//						$controllerInstance->{$this->actionName}();
-//					} else {
-//						//paramsを引数にセットして実行
-//					}
-//				}
-//
-//			} catch(Exception $e) {
-//				//Error時の処理
-//				echo $e->getMessage();
-//			}
-		}
+			try {
+				//ファイルの存在確認
+				if (file_exists($controllerFileName)){
+					//ControllerFileを読み込む
+					require_once($controllerFileName);
+				} else {
+					//コントローラーが無いときの例外を投げる
+					throw new \Exception("Not Found {$this->controllerName}controller.php");
+				}
 
-		public function genControllerInstance($controllerClassName)
-		{
+				//インスタンスの生成
+				$controllerClassName = $this->controllerName.'controller';
+				$controllerInstance = new $controllerClassName();
+				$controllerInstance->controllerName = $this->controllerName;
+				$controllerInstance->actionName = $this->actionName;
+				$controllerInstance->httpMethod = $this->httpMethod;
+				$controllerInstance->query = $this->query;
+				$controllerInstance->params = $params['params'];
+
+				if ($this->httpMethod !== 'GET'){
+					//GET
+				} else {
+					//POST,PUT, DELETE,
+					if(isset($_POST)){
+						$controllerInstance->receiveData = $_POST;
+					}
+				}
+
+				if (method_exists($controllerInstance,$controllerInstance->actionName)){
+					//Controllerの実行
+					$controllerInstance->{$controllerInstance->actionName}();
+				} else {
+					throw new \Exception("Not Found \"{$controllerInstance->actionName}\" Method in {$controllerInstance->controllerName}controller.php");
+				}
+
+			} catch(\Exception $e) {
+				//Error時の処理
+				echo $e->getMessage();
+			}
 		}
 	}
