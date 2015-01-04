@@ -1,12 +1,12 @@
 <?php
+	namespace pwaf\libs;
+
 	/**
 	 * Created by PhpStorm.
 	 * User: nick
 	 * Date: 15/01/04
 	 * Time: 10:02
 	 */
-
-	namespace pwaf\libs;
 
 	use pwaf\config\route;
 
@@ -24,27 +24,49 @@
 		 */
 		private static function defaultRoutting($controller) {}
 
+		/**
+		 * @param null $requestURI
+		 * @param string $httpMethod
+		 * @return array|bool
+		 * @todo リファクタリング・phpunitテスト
+		 */
 		public static function loadRouteConfig($requestURI = null, $httpMethod = "GET") {
-			$setRoute = array_merge(route::$myRoute);
-			//@が存在する場合は
 
-			// RequeURIをキーとして配列を検索する
-			if (array_key_exists($requestURI, $setRoute)) {
+			//ユーザー設定値の読み出し
+			$setRoutes = route::$myRoute;
 
-				//@存在しない場合
-				$currentRoute = $setRoute[$requestURI];
-				//対象のHTTPMETHODのにむけたActionの存在確認
-				if ($currentRoute["actions"][$httpMethod]){
-					return [
-						"controller" => $currentRoute['controller'],
-						"actions" => $currentRoute['actions'][$httpMethod]
-					];
+			//@が存在する場合は@部分を削る
+			$compiledRoutes = [];
+			foreach ($setRoutes as $url => $params){
+				$tokens = explode('/',ltrim($url,'/'));
+				foreach ($tokens as $tokenKey => $token){
+					if (stripos($token,'@') === 0){
+						$name = substr($token,1);
+						//表示上の問題で特に運用上問題はなさそう。
+						$token = '(?P<'. $name. '>[^/]+)';
+					}
+					$tokens[$tokenKey] = $token;
 				}
+				$pattern = '/'. implode('/',$tokens);
+				$compiledRoutes[$pattern] = $params;
+			}
 
-				return "{$requestURI}存在しません";
+			//TEST的にHTTPMethodを変更
+			$httpMethod = "POST";
+
+			foreach ($compiledRoutes as $pattern => $params){
+				if (preg_match('#^'.$pattern."$#",$requestURI,$matches)){
+					if (isset($params[$httpMethod])){
+						return [
+							"controller" => $params[$httpMethod]['controller'],
+						    "action" => $params[$httpMethod]['action'],
+						    'params' => $matches,
+						];
+					} else {
+						return false;
+					}
+				}
 			}
 		}
 
-
-		//
 	}

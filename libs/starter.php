@@ -1,6 +1,8 @@
 <?php
 	namespace pwaf\libs;
+
 	use pwaf\config\route;
+
 	define("DEFAULT_CONTROLLER",'users');
 	define("DEFAULT_ACTION", 'index');
 
@@ -25,6 +27,7 @@
 
 			//requestURIからController名Action名を取得する
 			$params = router::loadRouteConfig($requestURI);
+
 			var_dump($params);
 
 //			$this->controllerName = strtolower($params[0]);

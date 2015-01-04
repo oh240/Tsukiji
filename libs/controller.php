@@ -1,6 +1,7 @@
 <?php
 	namespace pwaf\libs;
-	use \pwaf\libs\json;
+
+	use pwaf\libs\json;
 /**
  * Created by PhpStorm.
  * User: nick
