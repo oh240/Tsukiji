@@ -42,7 +42,6 @@
 				foreach ($tokens as $tokenKey => $token){
 					if (stripos($token,'@') === 0){
 						$name = substr($token,1);
-						//表示上の問題で特に運用上問題はなさそう。
 						$token = '(?P<'. $name. '>[^/]+)';
 					}
 					$tokens[$tokenKey] = $token;
@@ -51,7 +50,6 @@
 				$compiledRoutes[$pattern] = $params;
 			}
 
-			//TEST的にHTTPMethodを変更
 			foreach ($compiledRoutes as $pattern => $params){
 				if (preg_match('#^'.$pattern."$#",$requestURI,$matches)){
 					if (isset($params[$httpMethod])){

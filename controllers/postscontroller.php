@@ -1,15 +1,14 @@
 <?php
 	use \pwaf\libs\controller;
 	use \pwaf\libs\util;
-	use \pwaf\libs\json;
+
+	//使用するモデルをImport
+	use \pwaf\models\Users;
+
 
 	/**
- * Created by PhpStorm.
- * User: nick
- * Date: 15/01/02
- * Time: 0:36
- */
-
+	 * Class postscontroller
+	 */
 	class postscontroller extends controller
 	{
 
@@ -20,18 +19,29 @@
 
 		public function index()
 		{
-			json::set(500);
+			$users = Users::all();
+
+			if (!$users){
+				$this->statusCode = 201;
+			}
+			$this->jsonSet($users,"OK");
 		}
 
 		public function show()
 		{
 			$id = $this->params['id'];
-			json::set($id);
+
+			$user = Users::find($id);
+			if (empty($user)){
+				$this->statusCode = 201;
+			}
+
+			$this->jsonSet($user,"OK");
 		}
 
 		public function create()
 		{
-
+			$params = $this->receiveData;
 		}
 
 		public function update()

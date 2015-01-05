@@ -22,20 +22,4 @@
 					return false;
 			}
 		}
-
-		/**
-		 * @param $string
-		 */
-//		public static function isNumeric($string) {
-//
-//		}
-
-		/**
-		 * @param array $array
-		 * @return String
-		 */
-//		public static function arrayFirstKey($array) {
-//			$name = key($array);
-//			return $name;
-//		}
 	}

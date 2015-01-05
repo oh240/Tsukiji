@@ -54,21 +54,14 @@
 				$controllerInstance = new $controllerClassName();
 				$controllerInstance->controllerName = $this->controllerName;
 				$controllerInstance->actionName = $this->actionName;
-				$controllerInstance->httpMethod = $this->httpMethod;
-				$controllerInstance->query = $this->query;
-				$controllerInstance->params = $params['params'];
 
-				if ($this->httpMethod !== 'GET'){
-					//GET
-				} else {
-					//POST,PUT, DELETE,
+				if (method_exists($controllerInstance,$controllerInstance->actionName)){
+					$controllerInstance->httpMethod = $this->httpMethod;
+					$controllerInstance->params = $params['params'];
+					$controllerInstance->getQuery = $_GET;
 					if(isset($_POST)){
 						$controllerInstance->receiveData = $_POST;
 					}
-				}
-
-				if (method_exists($controllerInstance,$controllerInstance->actionName)){
-					//Controllerの実行
 					$controllerInstance->{$controllerInstance->actionName}();
 				} else {
 					throw new \Exception("Not Found \"{$controllerInstance->actionName}\" Method in {$controllerInstance->controllerName}controller.php");

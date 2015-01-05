@@ -21,9 +21,8 @@
 		public $httpMethod;
 		public $controllerName;
 		public $actionName;
-		public $httpCode;
+		public $statusCode;
 		public $params;
-		protected $json;
 		protected $debugLevel;
 
 		/**
@@ -31,12 +30,24 @@
 		 */
 		public function __construct()
 		{
-			//HTTPCODEのデフォルトに200をセット
-			$this->httpCode = 200;
+			$this->statusCode = 200;
+			$this->debugLevel = DEBUG_LEVEL;
 		}
 
-		public function set(){}
-
-
-
+		/**
+		 * @param $params
+		 * @param $message
+		 */
+		protected function jsonSet($params = [],$message)
+		{
+			$jsonData = [
+				'status' => $this->statusCode,
+				'message' => $message,
+			];
+			if (!empty($params)){
+				$jsonData['results'] = $params;
+			}
+			echo json_encode($jsonData);
+			return;
+		}
 	}
