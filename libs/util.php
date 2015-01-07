@@ -1,5 +1,5 @@
 <?php
-	namespace pwaf\libs;
+	namespace Tsukiji\libs;
 
 	/**
 	 * Created by PhpStorm.

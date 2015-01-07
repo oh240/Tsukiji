@@ -1,7 +1,7 @@
 <?php
-	namespace pwaf\libs;
+	namespace Tsukiji\libs;
 
-	use pwaf\config\route;
+	use Tsukiji\config\route;
 	define("DEFAULT_CONTROLLER",'users');
 	define("DEFAULT_ACTION", 'index');
 

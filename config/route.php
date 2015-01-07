@@ -1,5 +1,6 @@
 <?php
-	namespace pwaf\config;
+	namespace Tsukiji\config;
+
 	class route {
 		public static $myRoute = [
 			"/posts" => [

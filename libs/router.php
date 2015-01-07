@@ -1,5 +1,5 @@
 <?php
-	namespace pwaf\libs;
+	namespace Tsukiji\libs;
 
 	/**
 	 * Created by PhpStorm.
@@ -8,7 +8,7 @@
 	 * Time: 10:02
 	 */
 
-	use pwaf\config\route;
+	use Tsukiji\config\route;
 
 	class router {
 

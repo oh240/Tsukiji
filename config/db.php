@@ -1,5 +1,5 @@
 <?php
-	namespace pwaf\config;
+	namespace Tsukiji\config;
 /**
  * Created by PhpStorm.
  * User: nick

@@ -1,10 +1,9 @@
 <?php
-	use \pwaf\libs\controller;
-	use \pwaf\libs\util;
+	use \Tsukiji\libs\controller;
+	use \Tsukiji\libs\util;
 
 	//使用するモデルをImport
-	use \pwaf\models\Users;
-
+	use \Tsukiji\models\Users;
 
 	/**
 	 * Class postscontroller
@@ -20,7 +19,6 @@
 		public function index()
 		{
 			$users = Users::all();
-
 			if (!$users){
 				$this->statusCode = 201;
 			}

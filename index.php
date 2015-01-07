@@ -1,7 +1,7 @@
 
 <?php
-		use \pwaf\libs\starter;
-		use \pwaf\config\DB_CONFIG;
+		use \Tsukiji\libs\starter;
+		use \Tsukiji\config\DB_CONFIG;
 		use Illuminate\Database\Capsule\Manager as Capsule;
 
 		//autoLoaderを頑張って作成する

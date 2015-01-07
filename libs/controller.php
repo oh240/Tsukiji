@@ -1,7 +1,7 @@
 <?php
-	namespace pwaf\libs;
+	namespace Tsukiji\libs;
 
-	use pwaf\libs\json;
+	use Tsukiji\libs\json;
 /**
  * Created by PhpStorm.
  * User: nick
@@ -48,6 +48,11 @@
 				$jsonData['results'] = $params;
 			}
 			echo json_encode($jsonData);
+			$this->__addHeader();
 			return;
+		}
+
+		private function __addHeader(){
+			http_response_code($this->statusCode);
 		}
 	}

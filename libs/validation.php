@@ -1,7 +1,7 @@
 <?php
-namespace pwaf\libs;
+	namespace Tsukiji\libs;
 
 
-class validation {
+	class validation {
 
-}
+	}

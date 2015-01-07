@@ -1,5 +1,5 @@
 <?php
-	namespace pwaf\libs\Exception;
+	namespace Tsukiji\libs\Exception;
 	/**
 	 * Created by PhpStorm.
 	 * User: nick
