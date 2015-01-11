@@ -1,11 +1,10 @@
 
 <?php
+		//autoLoaderを頑張って作成する
+		require 'vendor/autoload.php';
 		use \Tsukiji\libs\starter;
 		use \Tsukiji\config\DB_CONFIG;
 		use Illuminate\Database\Capsule\Manager as Capsule;
-
-		//autoLoaderを頑張って作成する
-		require 'vendor/autoload.php';
 
 		//routes.phpの読み込み
 		require_once('config/route.php');
@@ -15,7 +14,7 @@
 		require_once('libs/router.php');
 		require_once('libs/controller.php');
 		require_once('libs/starter.php');
-		require_once('models/users.php');
+		require_once('models/posts.php');
 
 		//DBDataの読み込み
 		$capsel = new Capsule;

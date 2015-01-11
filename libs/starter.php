@@ -2,7 +2,7 @@
 	namespace Tsukiji\libs;
 
 	use Tsukiji\config\route;
-	define("DEFAULT_CONTROLLER",'users');
+
 	define("DEFAULT_ACTION", 'index');
 
 	class starter {
@@ -29,12 +29,18 @@
 			$this->httpMethod = $_SERVER['REQUEST_METHOD'];
 
 			//requestURIからController名Action名を取得する
-			$params = router::loadRouteConfig($requestURI);
+			$params = router::loadRouteConfig($requestURI,$this->httpMethod);
 
-			$this->controllerName = $params['controller'];
+			//add underscore
+			$this->controllerName = $params['controller'].'_';
 			$this->actionName = $params['action'];
-			array_shift($params['params']);
-			$this->params = $params['params'];
+
+			if (!empty($params['params'])){
+				array_shift($params['params']);
+				$this->params = $params['params'];
+			} else {
+				$this->params = "";
+			}
 
 			$controllerFilePath = "controllers/";
 			$controllerFileName = $controllerFilePath . $this->controllerName .'controller.php';
@@ -56,13 +62,17 @@
 				$controllerInstance->actionName = $this->actionName;
 
 				if (method_exists($controllerInstance,$controllerInstance->actionName)){
+
+					//Controller Params Set
 					$controllerInstance->httpMethod = $this->httpMethod;
 					$controllerInstance->params = $params['params'];
 					$controllerInstance->getQuery = $_GET;
 					if(isset($_POST)){
 						$controllerInstance->receiveData = $_POST;
 					}
+
 					$controllerInstance->{$controllerInstance->actionName}();
+
 				} else {
 					throw new \Exception("Not Found \"{$controllerInstance->actionName}\" Method in {$controllerInstance->controllerName}controller.php");
 				}

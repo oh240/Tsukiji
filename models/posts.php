@@ -3,9 +3,8 @@
 
 	use \Illuminate\Database\Eloquent\Model as Model;
 
-	class Users extends Model {
-
-		protected $table = "users";
-		public $timestamp = false;
+	class Posts extends Model {
+		protected $table = "posts";
+		public $timestamps = false;
 		protected $guarded = ['id'];
 	}

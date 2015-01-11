@@ -22,15 +22,13 @@
 					"controller" => "posts",
 					'action' => "update"
 				],
-			],
-			"/posts/@id/@id2" => [
-				"GET" => [
-					"controller" => "posts",
-					'action' => "show"
-				],
-				"POST" => [
+				"PUT" => [
 					"controller" => "posts",
 					'action' => "update"
+				],
+				"DELETE" => [
+					"controller" => "posts",
+					'action' => "delete"
 				],
 			],
 		];

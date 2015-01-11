@@ -15,7 +15,6 @@
 	 */
 	class controller
 	{
-		//??
 		public $receiveData;
 		public $getQuery;
 		public $httpMethod;
@@ -25,8 +24,16 @@
 		public $params;
 		protected $debugLevel;
 
+		//メッセージが指定されていない場合はこちらから検索して自動で行う。
+		protected $statusCodeDefaultMessages = [
+			200 => "OK",
+		    201 => "Created",
+		    400 => "But Request",
+			401 => "Unauthorized",
+			404 => "Not Found",
+		];
 		/**
-		 *
+		 * initial Controller
 		 */
 		public function __construct()
 		{
@@ -38,12 +45,17 @@
 		 * @param $params
 		 * @param $message
 		 */
-		protected function jsonSet($params = [],$message)
+		protected function jsonSet($params = [],$message = null)
 		{
+			if (!$message) {
+				$message = $this->statusCodeDefaultMessages[$this->statusCode];
+			}
+
 			$jsonData = [
 				'status' => $this->statusCode,
 				'message' => $message,
 			];
+
 			if (!empty($params)){
 				$jsonData['results'] = $params;
 			}
@@ -52,7 +64,12 @@
 			return;
 		}
 
-		private function __addHeader(){
+		/**
+		 *
+		 */
+		private function __addHeader()
+		{
 			http_response_code($this->statusCode);
+			header("Content-Type: application/json; charset=utf-8");
 		}
 	}
