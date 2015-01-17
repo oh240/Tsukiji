@@ -22,4 +22,11 @@
 					return false;
 			}
 		}
+
+		public static function debug($params)
+		{
+			echo '<pre>';
+				var_dump($params);
+			echo '</pre>';
+		}
 	}

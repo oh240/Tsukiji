@@ -67,6 +67,7 @@
 					$controllerInstance->httpMethod = $this->httpMethod;
 					$controllerInstance->params = $params['params'];
 					$controllerInstance->getQuery = $_GET;
+
 					if(isset($_POST)){
 						$controllerInstance->receiveData = $_POST;
 					}

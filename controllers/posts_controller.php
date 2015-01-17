@@ -62,7 +62,7 @@
 			if ($post->save()){
 				$message = "Updated";
 			} else {
-				$this->statusCode = 400;
+				$this->statusCode = 403;
 				$message = "Error";
 			}
 
